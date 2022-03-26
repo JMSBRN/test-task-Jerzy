@@ -11,23 +11,24 @@ function App() {
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
 	};
-
   const getItemFromLocalStorage = (data) => {
     localStorage.getItem(data);
   };
-
 	for (let i = 1; i < inputValue; i++) {
 		if(i % 3 === 0) {
 			dividedByThreeNumers = dividedByThreeNumers + `${i}, `;
 		}
 	};
-
  const setNumbersToLocalStorage = () => {
 	localStorage.setItem('numbers', dividedByThreeNumers);
-	inputValidation();
+  document.querySelector('.spinner-border').classList.remove('hidden');
+  setTimeout(() => {
+    document.querySelector('.spinner-border').classList.add('hidden');
+    inputValidation();
+  }, 3000);
+ 
  };
-
- function inputValidation() {
+ const inputValidation = () => {
   let text;
   let textError;
   if (isNaN(inputValue) || inputValue < 1 || inputValue > 10000000) {
@@ -37,9 +38,9 @@ function App() {
     text = `in number ${inputValue}`;
     document.querySelector('.error').innerHTML = text;
     document.querySelector('.numbers-result-title').innerHTML =  ` Divided by three, numbers is :`;
-    document.querySelector('.numbers-result').innerHTML = `${dividedByThreeNumers}`;
+    document.querySelector('.numbers-result').innerHTML = `${dividedByThreeNumers?dividedByThreeNumers: 'please input number above 3'}`;
   }
-}
+};
   return (
     <div className="App">
       <Context.Provider value ={{

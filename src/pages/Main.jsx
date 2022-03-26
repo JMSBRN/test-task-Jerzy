@@ -9,6 +9,7 @@ function Main() {
 
 	return (
 		<div className='main'>
+			<div className="spinner-border hidden"></div>
 			<div className="main-container">
 				<h3>Please input number and check how many numbers divided by three in !</h3>
 				<div className="form-input">
