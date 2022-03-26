@@ -28,10 +28,9 @@ function App() {
  };
 
  function inputValidation() {
-  // If x is Not a Number or less than one or greater than 10
   let text;
   let textError;
-  if (isNaN(inputValue) || inputValue < 1 || inputValue > 10) {
+  if (isNaN(inputValue) || inputValue < 1 || inputValue > 10000000) {
     textError = "Input not valid. Please input numbers  above 0 or below 10 000 000.";
     document.querySelector('.error').innerHTML = textError;
   } else {
