@@ -5,7 +5,7 @@ import Input from '../components/Input';
 import { Context } from '../Context';
 
 function Main() {
-	const {inputValue, setNumbersToLocalStorage, dividedByThreeNumers} = useContext(Context);
+	const {setNumbersToLocalStorage} = useContext(Context);
 
 	return (
 		<div className='main'>
@@ -14,8 +14,8 @@ function Main() {
 			  <Button onClick={setNumbersToLocalStorage} />
 				<div className="error"></div>
 			</div>
-				<div> in number {inputValue}  -- this numbers divided by three  </div>
-			  <div className="result-numbers"> {dividedByThreeNumers}</div>
+				<div className='numbers-result-title'></div>
+			  <div  className="numbers-result"></div>
 		</div>
 	);
 };
