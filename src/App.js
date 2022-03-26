@@ -39,11 +39,7 @@ function App() {
     document.querySelector('.numbers-result-title').innerHTML =  ` Divided by three, numbers is :`;
     document.querySelector('.numbers-result').innerHTML = `${dividedByThreeNumers}`;
   }
-
-
 }
-  
-
   return (
     <div className="App">
       <Context.Provider value ={{
@@ -52,7 +48,6 @@ function App() {
         getItemFromLocalStorage,
         setNumbersToLocalStorage,
         dividedByThreeNumers
-
       }}>
        <Main />
       </Context.Provider>
