@@ -14,21 +14,24 @@ function App() {
 	};
 
   const worker = new Worker('./ww.js'); // './ww.js' impotant!- not ../public/ww.js
-
+ 
   worker.onmessage = e => {
     resultValue = e.data;
+    if (resultValue){
+      inputValidation();
+      document.querySelector('.spinner-border').classList.add('hidden');
+    }else {
+     document.querySelector('.spinner-border').classList.remove('hidden');
+    };
+    
   };
 
  const handleSubmit = () => {
-  worker.postMessage(+inputValue);
+   setTimeout(() => {
+     worker.postMessage(+inputValue);
+   }, 3000);
 
-   if (resultValue){
-     inputValidation();
-     document.querySelector('.spinner-border').classList.add('hidden');
-   }else {
-    document.querySelector('.spinner-border').classList.remove('hidden');
-   };
-   
+ 
  };
 
 
