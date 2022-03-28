@@ -3,10 +3,11 @@ import React, { useState } from 'react';
 import './App.css';
 import Main from './pages/Main';
 import {Context} from './Context';
+import {divideByThree} from './divideNumber';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
-  let dividedByThreeNumers = '';
+  let resultValue = '';
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
@@ -14,13 +15,11 @@ function App() {
   const getItemFromLocalStorage = (data) => {
     localStorage.getItem(data);
   };
-	for (let i = 1; i < inputValue; i++) {
-		if(i % 3 === 0) {
-			dividedByThreeNumers = dividedByThreeNumers + `${i}, `;
-		}
-	};
+
+  resultValue = divideByThree(inputValue, resultValue);
+
  const setNumbersToLocalStorage = () => {
-	localStorage.setItem('numbers', dividedByThreeNumers);
+	localStorage.setItem('numbers', resultValue);
   document.querySelector('.spinner-border').classList.remove('hidden');
   setTimeout(() => {
     document.querySelector('.spinner-border').classList.add('hidden');
@@ -38,7 +37,7 @@ function App() {
     text = `in number ${inputValue}`;
     document.querySelector('.error').innerHTML = text;
     document.querySelector('.numbers-result-title').innerHTML =  ` Divided by three, numbers is :`;
-    document.querySelector('.numbers-result').innerHTML = `${dividedByThreeNumers?dividedByThreeNumers: 'please input number above 3'}`;
+    document.querySelector('.numbers-result').innerHTML = `${resultValue? resultValue: 'please input number above 3'}`;
   }
 };
   return (
@@ -48,7 +47,7 @@ function App() {
         inputValue,
         getItemFromLocalStorage,
         setNumbersToLocalStorage,
-        dividedByThreeNumers
+        resultValue
       }}>
        <Main />
       </Context.Provider>
