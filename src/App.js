@@ -7,34 +7,25 @@ import {Context} from './Context';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
+  const worker = new Worker('./ww.js'); // './ww.js' impotant!- not ../public/ww.js
   let resultValue = '';
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
 	};
-
-  const worker = new Worker('./ww.js'); // './ww.js' impotant!- not ../public/ww.js
- 
   worker.onmessage = e => {
     resultValue = e.data;
     if (resultValue){
       inputValidation();
       document.querySelector('.spinner-border').classList.add('hidden');
-    }else {
-     document.querySelector('.spinner-border').classList.remove('hidden');
     };
-    
   };
-
  const handleSubmit = () => {
+  document.querySelector('.spinner-border').classList.remove('hidden');
    setTimeout(() => {
      worker.postMessage(+inputValue);
    }, 3000);
-
- 
  };
-
-
  const inputValidation = () => {
   let text;
   let textError;
@@ -46,7 +37,7 @@ function App() {
     document.querySelector('.error').innerHTML = text;
     document.querySelector('.numbers-result-title').innerHTML =  ` Divided by three, numbers is :`;
     document.querySelector('.numbers-result').innerHTML = `${resultValue? resultValue: 'please input number above 3'}`;
-  }
+  };
 };
   return (
     <div className="App">
