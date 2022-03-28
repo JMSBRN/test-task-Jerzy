@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import './App.css';
 import Main from './pages/Main';
 import {Context} from './Context';
-import {divideByThree} from './divideNumber';
+//import {divideByThree} from './divideNumber';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
@@ -12,21 +12,26 @@ function App() {
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
 	};
-  const getItemFromLocalStorage = (data) => {
-    localStorage.getItem(data);
+
+  const worker = new Worker('./ww.js'); // './ww.js' impotant!- not ../public/ww.js
+
+  worker.onmessage = e => {
+    resultValue = e.data;
   };
 
-  resultValue = divideByThree(inputValue, resultValue);
+ const handleSubmit = () => {
+  worker.postMessage(+inputValue);
 
- const setNumbersToLocalStorage = () => {
-	localStorage.setItem('numbers', resultValue);
-  document.querySelector('.spinner-border').classList.remove('hidden');
-  setTimeout(() => {
-    document.querySelector('.spinner-border').classList.add('hidden');
-    inputValidation();
-  }, 3000);
- 
+   if (resultValue){
+     inputValidation();
+     document.querySelector('.spinner-border').classList.add('hidden');
+   }else {
+    document.querySelector('.spinner-border').classList.remove('hidden');
+   };
+   
  };
+
+
  const inputValidation = () => {
   let text;
   let textError;
@@ -45,8 +50,7 @@ function App() {
       <Context.Provider value ={{
         handleInputValue,
         inputValue,
-        getItemFromLocalStorage,
-        setNumbersToLocalStorage,
+        handleSubmit,
         resultValue
       }}>
        <Main />
