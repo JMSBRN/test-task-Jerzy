@@ -3,28 +3,24 @@ import React, { useState } from 'react';
 import './App.css';
 import Main from './pages/Main';
 import {Context} from './Context';
-//import {divideByThree} from './divideNumber';
+import {divideByThree} from './divideNumber';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
-  const worker = new Worker('./ww.js'); // './ww.js' impotant!- not ../public/ww.js
   let resultValue = '';
 
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
 	};
-  worker.onmessage = e => {
-    resultValue = e.data;
-    if (resultValue){
-      inputValidation();
-      document.querySelector('.spinner-border').classList.add('hidden');
-    };
-  };
+
+  resultValue = divideByThree(inputValue);
+
  const handleSubmit = () => {
   document.querySelector('.spinner-border').classList.remove('hidden');
    setTimeout(() => {
-     worker.postMessage(+inputValue);
-   }, 3000);
+    inputValidation();
+    document.querySelector('.spinner-border').classList.add('hidden');
+   },0);
  };
  const inputValidation = () => {
   let text;
@@ -39,6 +35,8 @@ function App() {
     document.querySelector('.numbers-result').innerHTML = `${resultValue? resultValue: 'please input number above 3'}`;
   };
 };
+
+
   return (
     <div className="App">
       <Context.Provider value ={{
