@@ -3,25 +3,29 @@ import React, { useState } from 'react';
 import './App.css';
 import Main from './pages/Main';
 import {Context} from './Context';
-import {divideByThree} from './divideNumber';
 
 function App() {
   const [inputValue, setInputValue] = useState('');
+  const [disabled, setDisabled] = useState(false);
   let resultValue = '';
-
+  
+  const worker = new Worker("./ww.js"); 
+  worker.postMessage(+inputValue);
+  worker.onmessage = e => {
+    resultValue = e.data;
+  };
   const handleInputValue = (e) => {
     setInputValue(e.target.value);
 	};
-
-  resultValue = divideByThree(inputValue);
-
  const handleSubmit = () => {
   document.querySelector('.spinner-border').classList.remove('hidden');
+  setDisabled(true);
    setTimeout(() => {
-    inputValidation();
+    inputValidation(); 
     document.querySelector('.spinner-border').classList.add('hidden');
-   },0);
+   },3000);
  };
+
  const inputValidation = () => {
   let text;
   let textError;
@@ -33,9 +37,9 @@ function App() {
     document.querySelector('.error').innerHTML = text;
     document.querySelector('.numbers-result-title').innerHTML =  ` Divided by three, numbers is :`;
     document.querySelector('.numbers-result').innerHTML = `${resultValue? resultValue: 'please input number above 3'}`;
+    setDisabled(false);
   };
 };
-
 
   return (
     <div className="App">
@@ -43,7 +47,8 @@ function App() {
         handleInputValue,
         inputValue,
         handleSubmit,
-        resultValue
+        resultValue,
+        disabled
       }}>
        <Main />
       </Context.Provider>

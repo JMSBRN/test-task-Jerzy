@@ -5,7 +5,7 @@ import Input from '../components/Input';
 import { Context } from '../Context';
 
 function Main() {
-	const {handleSubmit} = useContext(Context);
+	const {handleSubmit, disabled} = useContext(Context);
 
 	return (
 		<div className='main'>
@@ -14,7 +14,7 @@ function Main() {
 				<h3>Please input number and check how many numbers divided by three in !</h3>
 				<div className="form-input">
 					<Input />
-					<Button onClick={handleSubmit} />
+					<Button disabled={disabled} onClick={handleSubmit} />
 				</div>
 					<div className="messages">
 						<div className="error"></div>
