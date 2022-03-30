@@ -7,7 +7,8 @@ const {handleInputValue} = useContext(Context);
 
 	return (
 		<div className='input'>
-     <input onChange={handleInputValue}  type="text"/>
+		  <label htmlFor='input'></label>
+      <input id='input' onChange={handleInputValue}  type="text"/>
 		</div>
 	);
 };
